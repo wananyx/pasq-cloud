@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-common/pasq-common-base" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-config" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-gateway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-monitor" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-monitor/pasq-monitor-admin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-monitor/pasq-monitor-turbine" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-provider-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-provider-api/pasq-provider-auth-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-provider-api/pasq-provider-test-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-provider-api/pasq-provider-user-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-provider/pasq-provider-auth" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-provider/pasq-provider-test" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-provider/pasq-provider-user" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-registry" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pasq-registry/pasq-registry-eureka" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

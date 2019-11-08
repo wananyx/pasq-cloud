@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: pasq-monitor-admin
+  #  profiles:
+  #    active: secure #使用secure配置，该配置声明在启动类AdminApplication中
+  security: #设置登陆admin的账号密码
+    user:
+      name: admin
+      password: admin
+server:
+  port: 11111
+#服务注册相关配置
+eureka:
+  client:
+    registryFetchIntervalSeconds: 5 #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    service-url:
+      defaultZone: http://root:pasq666@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 5 # 表示eureka client发送心跳给server端的频率，默认为30秒 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+    health-check-url-path: /actuator/health #健康检查的地址（依赖spring-boot-starter-actuator）
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}
+    metadata-map: #admin server端配置参数,为了能注册在eureka中
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+
+# 监控相关配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"   # 配置启用所有的监控端点
+  endpoint:
+    health:
+      show-details: ALWAYS # 显示详情, 该值除了always之外还有when-authorized、never，默认值是never。
+#turbine:
+#  combine-host-port: true
+#  app-config: pasq-provider-user,pasq-provider-auth
+#  cluster-name-expression: "default"

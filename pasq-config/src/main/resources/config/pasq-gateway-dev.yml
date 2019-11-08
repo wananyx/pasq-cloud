@@ -1,0 +1,37 @@
+#zuul网关的核心配置
+zuul:
+  ignored-services: '*'
+  sensitiveHeaders:
+  routes:
+    oauth:
+      path: /api-o/**
+      sensitiveHeaders:
+      serviceId: pasq-provider-auth
+#      ribbon:
+#        eager-load:
+#          enabled: true
+#        MaxAutoRetries: 1
+#        MaxAutoRetriesNextServer: 2
+#        OkToRetryOnAllOperations: false
+#        ConnectTimeout: 10000
+#        ReadTimeout: 10000
+    user:
+      path: /api-u/**
+      sensitiveHeaders:
+      serviceId: pasq-provider-user
+#      ribbon:
+#        eager-load:
+#          enabled: true
+#        MaxAutoRetries: 1
+#        MaxAutoRetriesNextServer: 2
+#        OkToRetryOnAllOperations: false
+#        ConnectTimeout: 10000
+#        ReadTimeout: 10000
+    test:
+      path: /api-t/**
+      serviceId: pasq-provider-test
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+  add-proxy-headers: true
+  add-host-header: true

@@ -1,0 +1,113 @@
+
+spring:
+  application:
+    name: pasq-provider-user
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: pasq-config
+      profile: dev
+      fail-fast: true
+  # 允许注册到eureka的名字和项目名一致
+  main:
+    allow-bean-definition-overriding: true
+  # 设置admin监控中心配置
+  boot:
+    admin:
+      client:
+        url: http://localhost:11111
+        username: admin
+        password: admin
+        instance:
+          prefer-ip: true
+  # 设置zipkin+sleuth链路追踪配置
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411/
+    locator:
+      discovery:
+        enabled: true
+    sender:
+      type: WEB
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      # 默认的采样比率为0.1，不能看到所有请求数据
+      # 更改采样比率为1，就能看到所有的请求数据了，但是这样会增加接口调用延迟
+      probability: 1.0
+  # 设置数据源
+  datasource:
+    url: jdbc:mysql://localhost:3306/pasq_user?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: root
+  security:
+    user:
+      name: root
+      password: root
+server:
+  port: 10012
+# 数据持久层框架mybatis-plus配置
+mybatis-plus:
+  typeAliasesPackage: com.pasq.provider.entity
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  global-config:
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #数据库大写下划线转换
+      #capital-mode: true
+      #逻辑删除配置
+      #logic-delete-value: 1
+      #logic-not-delete-value: 0
+      db-type: mysql
+    #刷新mapper 调试神器
+    refresh: true
+  configuration:
+    map-underscore-to-camel-case: true #驼峰命名规则
+    cache-enabled: false
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #这个也是打印sql语句的
+
+#服务注册相关配置
+eureka:
+  client:
+    registryFetchIntervalSeconds: 5 #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    service-url:
+      defaultZone: http://root:pasq666@${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 5 # 每隔5秒发送一次心跳
+    lease-expiration-duration-in-seconds: 10 # 10秒不发送就过期
+    health-check-url-path: /actuator/health #admin 健康监测
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}
+
+#调用access_token时必须加上此配置,从网关层访问认证服务器的user-me接口获取当前登录用户信息
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://127.0.0.1:10011/user-me #先直接访问认证服务器的，回头改成网关的地址，真实生产环境中，这里配置nginx的地址，该地址指向网关集群
+      prefer-token-info: false
+
+# 监控相关配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"   # 配置启用所有的监控端点
+  endpoint:
+    health:
+      show-details: ALWAYS # 显示详情, 该值除了always之外还有when-authorized、never，默认值是never。
+#打印sql语句
+logging:
+  level:
+    com.pasq.provider: debug
+feign:
+  hystrix:
+    enabled: true
